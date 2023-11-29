@@ -1,0 +1,3 @@
+# Base image
+FROM osrf/ros:humble-desktop-full
+
