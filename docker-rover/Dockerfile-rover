@@ -1,6 +1,8 @@
 # Prebuilt base image with jetpack 6.0, pytorch 2.4 and ROS2 humble, please ensure that it has already been built.
 FROM base-image-rover
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TERM=xterm-256color
+RUN echo "PS1='\e[92m\u\e[0m@\e[94m\h\e[0m:\e[35m\w\e[0m# '" >> /root/.bashrc
 
 # Args
 ARG ROVER_REPO_SOFTWARE_NAME=rover-software
