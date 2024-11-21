@@ -1,8 +1,9 @@
 # Prebuilt base image with jetpack 6.0, pytorch 2.4 and ROS2 humble, please ensure that it has already been built.
 FROM base-image-rover
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 ENV TERM=xterm-256color
 RUN echo "PS1='\e[92m\u\e[0m@\e[94m\h\e[0m:\e[35m\w\e[0m# '" >> /root/.bashrc
+
 
 # Args
 ARG ROVER_REPO_SOFTWARE_NAME=rover-software
@@ -59,7 +60,7 @@ RUN python3 /usr/local/zed/get_python_api.py
 RUN ln -sf /usr/lib/aarch64-linux-gnu/tegra/libv4l2.so.0 /usr/lib/aarch64-linux-gnu/libv4l2.so
 
 # Forces Docker to rebuild steps below by changing the CACHEBUST value using $(date +%s) (time in seconds since 1970).
-ARG CACHEBUST=1
+#ARG CACHEBUST=1
 
 # Clone repos
 RUN mkdir -p ${BASE_FOLDER}/${ROS_WORKSPACE_NAME}/src && \
@@ -74,7 +75,7 @@ WORKDIR ${BASE_FOLDER}/${ROS_WORKSPACE_NAME}
 RUN apt-get update -y || true && rosdep update && \
     rosdep install --from-paths src --ignore-src -r -y 
 
-RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build"
+RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --packages-select hardware"
 
 #################################
 #### ZED camera setup processs ##

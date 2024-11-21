@@ -1,8 +1,9 @@
 # Use the latest version of Jetpack as base image
 FROM nvcr.io/nvidia/l4t-jetpack:r36.3.0
 
+ARG CACHEBUST=1
 # Avoid prompts with apt-get
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Update apt-get and install necessary packages
 RUN apt-get update && \
