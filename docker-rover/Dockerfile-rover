@@ -104,7 +104,14 @@ RUN echo "source ${BASE_FOLDER}/${ROS_WORKSPACE_NAME}/install/setup.bash" >> ~/.
 
 RUN echo "export ROS_DOMAIN_ID=1" >> ~/.bashrc
 
+# add something to make the modprode work in the container
+# RUN apt-get update && apt-get install kmod
 
+# https://forums.developer.nvidia.com/t/logitech-f710-kernel-module-issues-jetpack-6/296904/20
+# RUN git clone https://github.com/paroj/xpad.git /usr/src/xpad-0.4
+# RUN apt-get update && apt-get install dkms -y
+# COPY /headers_for_F710 /usr/src/linux-headers-5.15.148-tegra-ubuntu22.04_aarch64
+# RUN dkms install -m xpad -v 0.4 --kernelsourcedir /usr/src/linux-headers-5.15.148-tegra-ubuntu22.04_aarch64
 # Copy the entrypoint script into the container
 COPY ./entrypoint.sh /
 
