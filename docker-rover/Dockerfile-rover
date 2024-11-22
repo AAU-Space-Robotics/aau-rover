@@ -80,6 +80,7 @@ RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --package
 #################################
 #### ZED camera setup processs ##
 #################################
+RUN pip install empy==3.3.4
 RUN mkdir -p ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src && \
 	git clone --recurse-submodules -b humble-v4.1.4 https://github.com/stereolabs/zed-ros2-wrapper.git ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src
 RUN apt-get update -y && \

@@ -1,7 +1,6 @@
 # Use the latest version of Jetpack as base image
 FROM nvcr.io/nvidia/l4t-jetpack:r36.3.0
 
-ARG CACHEBUST=1
 # Avoid prompts with apt-get
 ARG DEBIAN_FRONTEND=noninteractive
 
