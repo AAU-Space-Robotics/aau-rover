@@ -5,6 +5,7 @@ function usage {
   echo "Usage: $0 [OPTIONS]"
   echo "Options:"
   echo "  --name=CONTAINER_NAME      Name of the Docker container."
+  echo "  --image=IMAGE_NAME         Name of the image to run."
   echo "  --mode=MODE                "
   echo "      test:                  Temporary, removed on stop."
   echo "      devel:                 Persistent, for development."
@@ -40,6 +41,10 @@ while [[ "$#" -gt 0 ]]; do
     --name=*)
       container_name="${1#*=}"
       echo "--name=$container_name"
+      ;;
+    --image=*)
+      image_name="${1#*=}"
+      echo "--name=$image_name"
       ;;
     --mode=*)
       mode="${1#*=}"
@@ -109,7 +114,7 @@ else
                -it \
               --privileged \
 	      --runtime=nvidia \
-              -v /lib/modules/5.15.136-tegra:/lib/modules/5.15.136-tegra \
+              -v /lib/modules/5.15.148-tegra:/lib/modules/5.15.148-tegra \
               --network=host \
                "${image_name}" \
                ${start_command} 
