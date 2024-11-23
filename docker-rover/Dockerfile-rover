@@ -1,8 +1,7 @@
 # Prebuilt base image with jetpack 6.0, pytorch 2.4 and ROS2 humble, please ensure that it has already been built.
 FROM base-image-rover
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TERM=xterm-256color
-RUN echo "PS1='\e[92m\u\e[0m@\e[94m\h\e[0m:\e[35m\w\e[0m# '" >> /root/.bashrc
+
 
 
 # Args
@@ -80,9 +79,18 @@ RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --package
 #################################
 #### ZED camera setup processs ##
 #################################
+COPY SN35803121.conf /usr/local/zed/settings/
+COPY SN37915676.conf /usr/local/zed/settings/
 RUN pip install empy==3.3.4
 RUN mkdir -p ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src && \
-	git clone --recurse-submodules -b humble-v4.1.4 https://github.com/stereolabs/zed-ros2-wrapper.git ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src
+	git clone --recurse-submodules -b humble-v4.1.4 https://github.com/stereolabs/zed-ros2-wrapper.git ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src 
+
+WORKDIR $BASE_FOLDER/$ZED_WORKSPACE_NAME/src/zed_wrapper/config
+RUN rm common.yaml
+COPY common.yaml /
+
+WORKDIR ${BASE_FOLDER}/${ROS_WORKSPACE_NAME}
+
 RUN apt-get update -y && \
         rosdep update -y && \
         rosdep install --from-paths ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src --ignore-src -r -y
@@ -116,5 +124,7 @@ RUN echo "export ROS_DOMAIN_ID=1" >> ~/.bashrc
 COPY ./entrypoint.sh /
 
 
+ENV TERM=xterm-256color
+RUN echo "PS1='\[\e[31m\]\u\[\e[0m\]|\[\e[38;5;33m\]\w\\[\e[0m\]|\n\$ '" >> /root/.bashrc
 # Set the entrypoint script as the entry point for the container
 ENTRYPOINT ["/entrypoint.sh"]
