@@ -123,7 +123,14 @@ RUN echo "export ROS_DOMAIN_ID=1" >> ~/.bashrc
 COPY ./entrypoint.sh /
 
 
+
+RUN apt-get install -y ros-humble-rmw-cyclonedds-cpp 
+RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /root/.bashrc
+
+RUN apt-get install -y neovim
+
 ENV TERM=xterm-256color
 RUN echo "PS1='\[\e[31m\]\u\[\e[0m\]|\[\e[38;5;33m\]\w\\[\e[0m\]|\n\$ '" >> /root/.bashrc
 # Set the entrypoint script as the entry point for the container
 ENTRYPOINT ["/entrypoint.sh"]
+RUN rm -rf /var/lib/apt/lists/*
