@@ -50,8 +50,7 @@ RUN echo "# R${L4T_MAJOR} (release), REVISION: ${L4T_MINOR}" > /etc/nv_tegra_rel
    https://download.stereolabs.com/zedsdk/${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}/l4t${L4T_MAJOR}.${L4T_MINOR}/jetsons && \
    chmod +x ZED_SDK_Linux_JP.run ; ./ZED_SDK_Linux_JP.run -- silent skip_tools && \
    rm -rf /usr/local/zed/resources/* && \
-   rm -rf ZED_SDK_Linux_JP.run && \
-   rm -rf /var/lib/apt/lists/*
+   rm -rf ZED_SDK_Linux_JP.run 
 
 RUN python3 /usr/local/zed/get_python_api.py
 
@@ -87,7 +86,7 @@ RUN mkdir -p ${BASE_FOLDER}/${ZED_WORKSPACE_NAME}/src && \
 
 WORKDIR $BASE_FOLDER/$ZED_WORKSPACE_NAME/src/zed_wrapper/config
 RUN rm common.yaml
-COPY common.yaml /
+COPY common.yaml common.yaml
 
 WORKDIR ${BASE_FOLDER}/${ROS_WORKSPACE_NAME}
 
