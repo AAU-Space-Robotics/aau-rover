@@ -1,6 +1,6 @@
 # AAU Space Robotics - System Setup Repository
 This repository contains all the files and documentation related to running the system on the physical rover or in simulation.
-
+https://aau-space-robotics.github.io/aau-rover/
 ## Physical Rover
 
 ### Building
